@@ -1,0 +1,1 @@
+worker: python First_bot.py
