@@ -28,8 +28,7 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-TOKEN = os.getenv("TOKEN")
-bot = Bot(TOKEN)
+bot = Bot(os.getenv("TOKEN"))
 
 dp = Dispatcher()
 """=============================================================================================="""
