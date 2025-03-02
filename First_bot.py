@@ -196,7 +196,15 @@ key_shkoda = ReplyKeyboardMarkup(
 
 
 
+# Фейковий сервер для Render
+async def handle(request):
+    logging.info("📡 Received ping from Render")
+    return web.Response(text="Бот працює!")
+
 async def main():
+    logging.info("🚀 Запускаємо бота...")
+    
+    # Фейковий сервер для Render
     app = web.Application()
     app.router.add_get("/", handle)
     
@@ -204,9 +212,14 @@ async def main():
     await runner.setup()
     site = web.TCPSite(runner, "0.0.0.0", 8080)
     await site.start()
-    #await bot.delete_webhook(drop_pending_updates=True)
-    print("Бот запущено")
+    
+    logging.info("✅ Фейковий сервер працює на порту 8080")
+    
+    # Запуск бота
     await dp.start_polling(bot)
 
-if __name__ == '__main__':
-    asyncio.run(main())
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        logging.error(f"❌ Помилка при запуску бота: {e}")
