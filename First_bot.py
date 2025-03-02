@@ -6,7 +6,10 @@ import os
 from aiogram.types import Message, CallbackQuery
 from aiogram import F
 from aiogram.filters import Command
+
 from aiohttp import web
+import logging
+
 
 #from aiogram.utils import executor   # для парсера
 #import requests                      # для парсера
