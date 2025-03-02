@@ -6,7 +6,7 @@ import os
 from aiogram.types import Message, CallbackQuery
 from aiogram import F
 from aiogram.filters import Command
-
+from aiohttp import web
 
 #from aiogram.utils import executor   # для парсера
 #import requests                      # для парсера
@@ -33,6 +33,8 @@ bot = Bot(os.getenv("TOKEN"))
 dp = Dispatcher()
 """=============================================================================================="""
 
+async def handle(request):
+    return web.Response(text="Бот працює!")
 
 
 @dp.message(Command("start"))
@@ -195,6 +197,13 @@ key_shkoda = ReplyKeyboardMarkup(
 
 
 async def main():
+    app = web.Application()
+    app.router.add_get("/", handle)
+    
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", 8080)
+    await site.start()
     #await bot.delete_webhook(drop_pending_updates=True)
     print("Бот запущено")
     await dp.start_polling(bot)
